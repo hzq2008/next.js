@@ -1,10 +1,12 @@
 import Image from 'next/image'
 import Link from 'next/link'
+import Date from '../components/date/date'
 import styles from '../styles/Home.module.css'
 import Layout from '../components/layout/layout'
 import utilStyles from '../styles/utils.module.css'
+import { getSortedPostsData } from '../lib/posts'
 
-export default function Home() {
+export default function Home({ allPostsData }) {
   return (
     <Layout home>
       <section className={utilStyles.headingMd}>
@@ -28,15 +30,6 @@ export default function Home() {
                 <h2>Learn &rarr;</h2>
                 <p>Learn about Next.js in an interactive course with quizzes!</p>
               </a>
-
-              <a
-                href="https://github.com/vercel/next.js/tree/master/examples"
-                className={styles.card}
-              >
-                <h2>Examples &rarr;</h2>
-                <p>Discover and deploy boilerplate example Next.js projects.</p>
-              </a>
-
               <a
                 href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
                 className={styles.card}
@@ -46,14 +39,6 @@ export default function Home() {
                   Instantly deploy your Next.js site to a public URL with Vercel.
                 </p>
               </a>
-              <Link href="/posts/first-post">
-                <a className={styles.card}>
-                  <h2>Link &rarr;</h2>
-                  <p>
-                    Link.
-                  </p>
-                </a>
-              </Link>
             </div>
           </main>
 
@@ -71,6 +56,52 @@ export default function Home() {
           </footer>
         </div>
       </section>
+      <section className={`${utilStyles.headingMd} ${utilStyles.padding1px}`}>
+        <h2 className={utilStyles.headingLg}>Blog</h2>
+        <ul className={utilStyles.list}>
+          {allPostsData.map(({ id, date, title }) => (
+            <li className={utilStyles.listItem} key={id}>
+              <Link href={`/posts/${id}`}>
+                <a>{title}</a>
+              </Link>
+              <br />
+              <small className={utilStyles.lightText}>
+                <Date dateString={date} />
+              </small>
+            </li>
+          ))}
+        </ul>
+      </section>
     </Layout>
   )
 }
+export async function getStaticProps() {
+  const allPostsData = getSortedPostsData()
+  return {
+      props: {
+        allPostsData
+      }
+  }
+}
+
+// To use Server-side Rendering  服务端
+// export async function getServerSideProps(context) {
+//   return {
+//     props: {
+//       // props for your component
+//     }
+//   }
+// }
+
+
+// Client-side Rendering  客户端   fetch
+// a React hook for data fetching called SWR.
+// import useSWR from 'swr'
+
+// function Profile() {
+//   const { data, error } = useSWR('/api/user', fetch)
+
+//   if (error) return <div>failed to load</div>
+//   if (!data) return <div>loading...</div>
+//   return <div>hello {data.name}!</div>
+// }

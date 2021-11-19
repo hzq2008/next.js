@@ -9,12 +9,23 @@
   },
   "dependencies": {
     "classnames": "^2.3.1",
+    "date-fns": "^2.26.0",
+    "gray-matter": "^4.0.3",
     "next": "12.0.3",
+    "postcss-flexbugs-fixes": "^5.0.2",
+    "postcss-preset-env": "^7.0.0",
     "react": "17.0.2",
-    "react-dom": "17.0.2"
+    "react-dom": "17.0.2",
+    "remark": "^14.0.2",
+    "remark-html": "^15.0.0",
+    "sass": "^1.43.4",
+    "tailwindcss": "^2.2.19"
   },
   "devDependencies": {
+    "@types/node": "^16.11.8",
+    "@types/react": "^17.0.35",
     "eslint": "7",
-    "eslint-config-next": "12.0.3"
+    "eslint-config-next": "12.0.3",
+    "typescript": "^4.5.2"
   }
 }
